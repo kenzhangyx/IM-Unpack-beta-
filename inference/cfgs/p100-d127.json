@@ -1,0 +1,6 @@
+{
+    "weight":{
+        "percentile":1,
+        "num_dist_vals":127
+    }
+}

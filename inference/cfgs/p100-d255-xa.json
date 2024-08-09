@@ -1,0 +1,14 @@
+{
+    "weight":{
+        "percentile":1,
+        "num_dist_vals":255
+    },
+    "input":{
+        "percentile":1,
+        "num_dist_vals":255
+    },
+    "attention":{
+        "percentile":1,
+        "num_dist_vals":255
+    }
+}

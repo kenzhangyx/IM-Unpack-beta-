@@ -1,0 +1,10 @@
+{
+    "weight":{
+        "percentile":0.95,
+        "num_dist_vals":9
+    },
+    "input":{
+        "percentile":0.95,
+        "num_dist_vals":9
+    }
+}

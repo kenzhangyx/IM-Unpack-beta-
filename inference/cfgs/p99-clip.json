@@ -1,0 +1,14 @@
+{
+    "weight":{
+        "percentile":0.99,
+        "clip":true
+    },
+    "input":{
+        "percentile":0.99,
+        "clip":true
+    },
+    "attention":{
+        "percentile":0.99,
+        "clip":true
+    }
+}
