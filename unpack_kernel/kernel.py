@@ -20,6 +20,15 @@ def row_unpack(inp, scale, bits = 4):
     cum_cnt = torch.cumsum(torch.ceil(torch.log2(inp.max(dim = -1).values * scale + 1) / (bits - 1)).int(), dim = -1, dtype = torch.int)
     X = cum_cnt[-1].item()
     
+    # Convert X to int
+    X = int(X)
+    
+    # Ensure that inp is of type float
+    inp = inp.float()
+    
+    # bits should be passed as int
+    bits = int(bits)
+
     out = unpack.row_unpack_fn(inp, cum_cnt, scale, X, bits)
     return out
 
@@ -37,10 +46,7 @@ def col_unpack(A_inp, B_inp, scale, bits = 4):
     return A_out, B_out
 
 def both_unpack(A_inp, B_inp, scale, bits=4):
-    """
-    首先对列进行解压，得到新A和B，再对得到的新A进行行解压。
-    返回解压后的 A 和 B 矩阵。
-    """
+  
     # Step 1: 对列进行解压，得到新 A 和 B
     A_out, B_out = col_unpack(A_inp, B_inp, scale, bits)
 
@@ -69,35 +75,6 @@ def profile(fn):
     return (t1 - t0) / N
 
 if __name__ == "__main__":
-    A = construct_matrix(512, 512, 8, 1.1)
-    A_out = row_unpack(A, 1, bits = 8)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    
-    A = construct_matrix(512, 512, 4, 1.1)
-    A_out = row_unpack(A, 1, bits = 4)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    
-    A = construct_matrix(512, 512, 2, 1.1)
-    A_out = row_unpack(A, 1, bits = 2)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    
-    A = construct_matrix(512, 512, 8, 1.1)
-    B = construct_matrix(512, 512, 8, 1.1)
-    A_out, B_out = col_unpack(A, B, 1, bits = 8)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    print(B_out.shape, (B_out != 0).float().mean(dim = -1))
-    
-    A = construct_matrix(512, 512, 4, 1.1)
-    B = construct_matrix(512, 512, 4, 1.1)
-    A_out, B_out = col_unpack(A, B, 1, bits = 4)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    print(B_out.shape, (B_out != 0).float().mean(dim = -1))
-    
-    A = construct_matrix(512, 512, 2, 1.1)
-    B = construct_matrix(512, 512, 2, 1.1)
-    A_out, B_out = col_unpack(A, B, 1, bits = 2)
-    print(A_out.shape, (A_out != 0).float().mean(dim = -1))
-    print(B_out.shape, (B_out != 0).float().mean(dim = -1))
 
     #begin to test both
 

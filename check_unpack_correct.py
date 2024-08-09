@@ -9,7 +9,7 @@ C = torch.matmul(A, B.T)
 bit_width = 4
 
 # 测试 both_unpack
-A_final, B_final = both_unpack(A, B, 1, bits=bit_width)
+A_final, B_final = unpack_both(A, B, 1, bits=bit_width)
 
 # 进行矩阵乘法
 result = torch.matmul(A_final.float(), B_final.T.float())
